@@ -1,0 +1,155 @@
+\documentclass[aspectratio=43]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+
+
+%import the theme and packages for the code blocks
+\input{code_blocks_theme.tex}
+
+% Use Unipd as theme, with options:
+% - pageofpages: define the separation symbol of the footer page of pages (e.g.: of, di, /, default: of)
+% - logo: position another logo near the Unipd logo in the title page (e.g. department logo), passing the second logo path as option 
+% Use the environment lastframe to add the endframe text
+\usetheme[pageofpages=of]{Unipd}
+
+\title{Temporal and spatial analysis of earthquakes in Italy in the last century\\}
+\subtitle{}
+\author[]{Jamilov Javlon, Pirazzo Tommaso, Secco Benedetto}
+
+\date{14 luglio 2025}
+
+
+\begin{document}
+
+% Make the title page
+\frame{\titlepage}
+
+%--------------------------------------------------------------- project part
+\section{Introduction}
+
+\begin{frame}{What is this project about?}
+	In this work we studied the temporal and spatial analysis of earthquakes in Italy in the period 1925-2025. 
+	To achieve the goal of giving a complete and exhaustive picture of the phenomenon, we followed the following steps:\pause
+	
+	\vspace*{1cm}
+	
+	\begin{enumerate}
+		\item Prepare and inspect the data;\pause
+			\vspace*{0.5cm}
+		\item Spatial anlysis (Hazard map and hierarchical clustering);\pause
+			\vspace*{0.5cm}
+		\item Sviluppo (Forecast with ARIMA and SSA model);\pause
+	\end{enumerate}
+\end{frame}
+
+
+\section{First Part}
+
+%This is simply an example of how to start the presentation...you can change as you desire
+\begin{frame}{What is this project about?}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.95\textwidth]{EQ_images/all_earthquakes.png}
+	\end{figure}
+\end{frame}
+
+
+
+\section{Second Part}
+
+\begin{frame}{Spatial analysis}
+
+In order to obtain a sismic map based on the Gutemberg-Richter law We followed these steps:\pause
+
+\begin{enumerate}
+	\item Divide the Region into grid Cells; \pause
+	\item Count the number of events above magnitude $4$ (Trade-off); \pause
+	\item Fit the G-R law using linear regression on $log_{10}(N)$ vs. $M$; \pause
+	\item Derive local $a$ and $b$ values; \pause
+	
+\end{enumerate}
+
+\centering
+\includegraphics[width=1\textwidth]{EQ_images/G_R_parameters.png} \\
+
+\end{frame}
+
+	
+\begin{frame}[fragile]{Adding tectonic plates boundaries}
+	\begin{lstlisting}[language=R, basicstyle=\ttfamily\scriptsize]
+# https://www.usgs.gov/programs/earthquake-hazards/google-earthtmkml-files -> page where you can find the file for the edge of the plates
+		
+plates <- st_read("doc.kml", layer = "Plate Interface")
+		...
+		
+# add tectonic plates boundaries
+a_plot_plates <- ggplot() +
+
+	# borders
+	borders("world", 
+	regions = c(reg), 
+	fill = "gray80", colour = "gray10", alpha = 0) +
+			
+	# tectonic plates boundaries layer
+	geom_sf(data = plates, color = "blue", size = 2) +
+		...
+	\end{lstlisting}
+\end{frame}
+	
+
+\begin{frame}{Adding tectonic plates boundaries}
+	%aggiungere codice placche
+	\centering
+	\includegraphics[width=1\textwidth]{EQ_images/G_R_parameters_plates.png} \\
+\end{frame}
+
+\begin{frame}{Naive model for sismic hazard}
+	%aggiungere codice placche
+	\centering
+	In order to provide an exstimation of the sismic hazard in Italy, We tried to calculate the probability to have at least 1 high magnitude event in the next 10 years assuming that the intense events follw a Poisson distribution.  
+\end{frame}
+
+\begin{frame}{Naive model for sismic hazard}
+	\centering
+	\includegraphics[width=0.85\textwidth]{EQ_images/probability.png} \\
+\end{frame}
+
+\begin{frame}{Hierarchical clustering}
+	\centering
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=\textwidth]{EQ_images/clustering_2.png}
+	\end{minipage}
+	\hspace{0.05\textwidth}
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=\textwidth]{EQ_images/clustering_3.png}
+	\end{minipage}
+	
+	\vspace{0.25cm}
+	
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=\textwidth]{EQ_images/clustering_4.png}
+	\end{minipage}
+	\hspace{0.05\textwidth}
+	\begin{minipage}{0.35\textwidth}
+		\includegraphics[width=\textwidth]{EQ_images/clustering_5.png}
+	\end{minipage}
+\end{frame}
+
+
+
+\section{Third Part}
+
+
+
+
+\begin{emptyframe}
+	Thanks for your attention!
+\end{emptyframe}
+
+
+\end{document}
+
+

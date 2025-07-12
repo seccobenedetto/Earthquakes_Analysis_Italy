@@ -1,0 +1,19 @@
+\frametitle{Adding tectonic plates boundaries}
+\begin{lstlisting}[language=R, basicstyle=\ttfamily\scriptsize]
+# https://www.usgs.gov/programs/earthquake-hazards/google-earthtmkml-files -> page where you can find the file for the edge of the plates
+		
+plates <- st_read("doc.kml", layer = "Plate Interface")
+		...
+		
+# add tectonic plates boundaries
+a_plot_plates <- ggplot() +
+
+	# borders
+	borders("world",
+	regions = c(reg),
+	fill = "gray80", colour = "gray10", alpha = 0) +
+			
+	# tectonic plates boundaries layer
+	geom_sf(data = plates, color = "blue", size = 2) +
+		...
+	\end{lstlisting}

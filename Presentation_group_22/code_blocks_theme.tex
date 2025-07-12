@@ -1,0 +1,29 @@
+\usepackage{listings}
+\usepackage{xcolor}
+
+% Definizione colori
+\definecolor{sfondo}{RGB}{245,245,245}
+\definecolor{bordo}{RGB}{180,180,180}
+\definecolor{codice}{RGB}{20,20,120}
+\definecolor{commento}{RGB}{100,100,100}
+\definecolor{stringa}{RGB}{180,0,0}
+\definecolor{parolaChiave}{RGB}{0,0,180}
+
+% Stile personalizzato
+\lstset{
+	language=R,
+	backgroundcolor=\color{sfondo},
+	frame=single,
+	rulecolor=\color{bordo},
+	basicstyle=\ttfamily\small\color{codice},
+	keywordstyle=\color{parolaChiave}\bfseries,
+	commentstyle=\color{commento}\itshape,
+	stringstyle=\color{stringa},
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	numbersep=5pt,
+	showstringspaces=false,
+	breaklines=true,
+	emph={saluta,print,paste}, % parole da evidenziare
+	emphstyle=\color{magenta}
+}
